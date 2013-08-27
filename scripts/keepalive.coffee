@@ -7,7 +7,7 @@
 stayingalive = false
 
 module.exports = (robot) ->
-  robot.respond /(stay alive$/i, (msg) ->
+  robot.respond /stay alive$/i, (msg) ->
     if stayingalive
       msg.send 'Already staying alive.'
     else
@@ -20,8 +20,11 @@ startKeepAlive = (msg, text) ->
   setInterval () ->
     http = require 'http'
     http.get 'http://taanzbot.herokuapp.com/'
-    , (err, res, body) ->
+    , (res) ->
       console.log 'self-ping'
+    .on 'error'
+    , (err) ->
+      console.log err.message
   , 120000
   stayingalive = true
   text 'Turned on the bot-prod.'
