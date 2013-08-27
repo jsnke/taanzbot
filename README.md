@@ -2,54 +2,30 @@
 
 This is a version of GitHub's Campfire bot, hubot. He's pretty cool.
 
-This version is designed to be deployed on [Heroku][heroku]. This README was generated for you by hubot to help get you started. Definitely update and improve to talk about your own instance, how to use and deploy, what functionality he has, etc!
+This version is designed to be deployed on [Heroku][heroku]. This particular instance uses the [hubot-irc][hubot-irc] adapter to connect to IRC networks.
 
 [heroku]: http://www.heroku.com
+[hubot-irc]: https://github.com/nandub/hubot-irc
 
 ### Testing Hubot Locally
 
-You can test your hubot by running the following.
+To get your own hubot up and running we recommend following the [Getting Started](https://github.com/github/hubot/tree/master/docs) directions from the hubot wiki, they are summarized here:
 
-    % bin/hubot
-
-You'll see some start up output about where your scripts come from and a
-prompt.
-
-    [Sun, 04 Dec 2011 18:41:11 GMT] INFO Loading adapter shell
-    [Sun, 04 Dec 2011 18:41:11 GMT] INFO Loading scripts from /home/tomb/Development/hubot/scripts
-    [Sun, 04 Dec 2011 18:41:11 GMT] INFO Loading scripts from /home/tomb/Development/hubot/src/scripts
-    Hubot>
-
-Then you can interact with hubot by typing `hubot help`.
-
-    Hubot> hubot help
-
-    Hubot> animate me <query> - The same thing as `image me`, except adds a few
-    convert me <expression> to <units> - Convert expression to given units.
-    help - Displays all of the help commands that Hubot knows about.
-    ...
-
+    % npm install -g hubot coffee-script
+    % hubot --create myhubot
+    % cd myhubot
+    % npm install hubot-irc --save && npm install
+    % HUBOT_IRC_SERVER=irc.freenode.net \
+      HUBOT_IRC_ROOMS="#myhubot-irc" \
+      HUBOT_IRC_NICK="myhubot" \
+      HUBOT_IRC_UNFLOOD="true" \
+      bin/hubot -a irc --name myhubot
 
 ### Scripting
 
 Take a look at the scripts in the `./scripts` folder for examples.
 Delete any scripts you think are useless or boring.  Add whatever functionality you
 want hubot to have. Read up on what you can do with hubot in the [Scripting Guide](https://github.com/github/hubot/blob/master/docs/scripting.md).
-
-### Redis Persistence
-
-If you are going to use the `redis-brain.coffee` script from `hubot-scripts`
-(strongly suggested), you will need to add the Redis to Go addon on Heroku which requires a verified
-account or you can create an account at [Redis to Go][redistogo] and manually
-set the `REDISTOGO_URL` variable.
-
-    % heroku config:add REDISTOGO_URL="..."
-
-If you don't require any persistence feel free to remove the
-`redis-brain.coffee` from `hubot-scripts.json` and you don't need to worry
-about redis at all.
-
-[redistogo]: https://redistogo.com/
 
 ## Adapters
 
@@ -102,12 +78,7 @@ name as a double quoted string to the `external-scripts.json` file in this repo.
 
     % heroku create --stack cedar
     % git push heroku master
-    % heroku ps:scale app=1
-
-If your Heroku account has been verified you can run the following to enable
-and add the Redis to Go addon to your app.
-
-    % heroku addons:add redistogo:nano
+    % heroku ps:scale web=1
 
 If you run into any problems, checkout Heroku's [docs][heroku-node-docs].
 
