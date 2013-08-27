@@ -25,6 +25,6 @@ startKeepAlive = (msg, text) ->
     .on 'error'
     , (err) ->
       console.log err.message
-  , 120000
+  , 1200000
   stayingalive = true
   text 'Turned on the bot-prod.'
